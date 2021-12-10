@@ -1,58 +1,70 @@
 package ru.vsu.cs.kunakhova_a_y;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Locale.setDefault(Locale.ROOT);
+
         double x = readValue("x ", -1, 1);
-        int n = (int)readValue("n ", 0);
+        int n = (int) readValue("n ", 0);
         double E = readValue("E ", 0);
+
         double sumNMembersOfSequence = calculateSumOfFirstMembers(n, x, 0);
+
         double sumMembersOfSequenceMoreThenE = calculateSumOfFirstMembers(n, x, E);
+
         double sumMembersOfSequenceMoreThenEDivide10 = calculateSumOfFirstMembers(n, x, E / 10);
+
         double valueOfFunction = calculateValueOfFunction(x);
+
         printResults(sumNMembersOfSequence, sumMembersOfSequenceMoreThenE, valueOfFunction,
                 sumMembersOfSequenceMoreThenEDivide10, E, n);
     }
+
     private static double readValue(String name) {
         System.out.println("Enter " + name + ":");
         Scanner sc = new Scanner(System.in);
         return sc.nextDouble();
     }
+
     private static double readValue(String name, double minValue) {
         double value = readValue(name);
-        if (!( value > minValue)) {
+        if (!(value > minValue)) {
             System.out.println("Wrong value for " + name + ". Value can only be more then " + minValue);
             return readValue(name, minValue);
         } else {
             return value;
         }
     }
+
     private static double readValue(String name, double minValue, double maxValue) {
         double value = readValue(name);
-        if (!( value < maxValue)||!(value > minValue)) {
+        if (!(value < maxValue) || !(value > minValue)) {
             System.out.println("Wrong value for " + name + ". Value can only be more then " + minValue + " and less then " + maxValue);
             return readValue(name, minValue, maxValue);
         } else {
             return value;
         }
     }
+
     private static double calculateSumOfFirstMembers(int n, double x, double valueForComparison) {
         double previousMemberOfSequence = 1;
         double sumNMembersOfSequence = 0;
-        double temp;
-        double moduleTemp;
+        double step;
+        double moduleStep;
         for (int i = 1; i <= n; i++) {
-            temp = function(i, previousMemberOfSequence, x);
-            if (temp < 0) {
-                moduleTemp = -temp;
+            step = function(i, previousMemberOfSequence, x);
+            if (step < 0) {
+                moduleStep = -step;
             } else {
-                moduleTemp = temp;
+                moduleStep = step;
             }
-            if (moduleTemp > valueForComparison) {
-                sumNMembersOfSequence += temp;
+            if (moduleStep > valueForComparison) {
+                sumNMembersOfSequence += step;
             }
-            previousMemberOfSequence = temp;
+            previousMemberOfSequence = step;
         }
         return sumNMembersOfSequence;
     }
